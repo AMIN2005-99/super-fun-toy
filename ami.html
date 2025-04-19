@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>لعبة Super Fun Toy</title>
+  <style>
+    body { font-family: sans-serif; background: #f0f0f0; text-align: center; padding: 50px; direction: rtl; }
+    .container { background: white; padding: 30px; max-width: 500px; margin: auto; border-radius: 10px; box-shadow: 0 0 10px #ccc; }
+    img { width: 100%; max-width: 300px; margin: 20px 0; }
+    input, textarea { width: 90%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 16px; }
+    button { padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+    button:hover { background-color: #218838; }
+    .cta { background-color: #ffe564; padding: 10px; border-radius: 5px; font-weight: bold; display: inline-block; margin-bottom: 15px; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>منتجنا الجديد!</h1>
+    <img src="Screenshot 2024-11-12 135104.png" alt="Super Fun Toy">
+    <p>احصل على منتجك الآن عبر تعبئة البيانات التالية</p>
+    <div class="cta">SUPER FUN TOY</div>
+
+    <form action="https://formspree.io/f/mnnpedra" method="POST">
+      <input type="text" name="name" placeholder="الاسم الكامل" required>
+      <input type="email" name="email" placeholder="البريد الإلكتروني" required>
+      <input type="tel" name="phone" placeholder="رقم الهاتف" required>
+      <textarea name="note" placeholder="ملاحظات إضافية"></textarea>
+      <button type="submit">أرسل الطلب</button>
+    </form>
+  </div>
+
+</body>
+</html>
