@@ -30,7 +30,7 @@
       border-radius: 15px;
       margin: 20px;
       width: 90%;
-      max-width: 800px;
+      max-width: 900px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       transition: all 0.3s ease;
     }
@@ -39,7 +39,7 @@
       font-weight: bold;
     }
 
-    input, select, button {
+    input, button {
       width: 100%;
       padding: 10px;
       margin: 10px 0;
@@ -108,6 +108,24 @@
       color: white;
     }
 
+    .action-btn {
+      padding: 5px 10px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9em;
+    }
+
+    .edit-btn {
+      background: #ffc107;
+      color: #000;
+    }
+
+    .delete-btn {
+      background: #dc3545;
+      color: white;
+    }
+
     .message {
       background: #28a745;
       color: white;
@@ -145,6 +163,7 @@
         <tr>
           <th>الاسم واللقب</th>
           <th>الموضوع</th>
+          <th>العمليات</th>
         </tr>
       </thead>
       <tbody id="adminTableBody"></tbody>
@@ -191,7 +210,6 @@
     const selectedTopicInput = document.getElementById('selectedTopic');
     const successMsg = document.getElementById('successMsg');
 
-    // عرض المواضيع
     topics.forEach(topic => {
       const div = document.createElement('div');
       div.textContent = topic;
@@ -206,7 +224,6 @@
       selectedTopicInput.value = topic;
     }
 
-    // حفظ الاختيار
     document.getElementById('saveBtn').onclick = () => {
       const name = document.getElementById('studentName').value.trim();
       const topic = selectedTopicInput.value.trim();
@@ -217,7 +234,6 @@
 
       let data = JSON.parse(localStorage.getItem('students') || "[]");
 
-      // التحقق من عدم تكرار الموضوع
       if (data.some(d => d.topic === topic)) {
         alert("هذا الموضوع تم اختياره بالفعل من قبل طالب آخر!");
         return;
@@ -234,7 +250,6 @@
       document.querySelectorAll('.topic-card').forEach(c => c.classList.remove('selected'));
     };
 
-    // صفحة المشرف
     function goToAdmin() {
       const pass = prompt("أدخل كلمة مرور المشرف:");
       if (pass === "admin123") {
@@ -255,11 +270,37 @@
       const data = JSON.parse(localStorage.getItem('students') || "[]");
       const tbody = document.getElementById('adminTableBody');
       tbody.innerHTML = "";
-      data.forEach(d => {
+      data.forEach((d, i) => {
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${d.name}</td><td>${d.topic}</td>`;
+        tr.innerHTML = `
+          <td>${d.name}</td>
+          <td>${d.topic}</td>
+          <td>
+            <button class="action-btn edit-btn" onclick="editStudent(${i})">✏️ تعديل</button>
+            <button class="action-btn delete-btn" onclick="deleteStudent(${i})">🗑️ حذف</button>
+          </td>
+        `;
         tbody.appendChild(tr);
       });
+    }
+
+    function deleteStudent(index) {
+      if (confirm("هل أنت متأكد من حذف هذا الطالب؟")) {
+        let data = JSON.parse(localStorage.getItem('students') || "[]");
+        data.splice(index, 1);
+        localStorage.setItem('students', JSON.stringify(data));
+        loadAdminTable();
+      }
+    }
+
+    function editStudent(index) {
+      let data = JSON.parse(localStorage.getItem('students') || "[]");
+      const newName = prompt("الاسم الجديد:", data[index].name);
+      if (newName) {
+        data[index].name = newName;
+        localStorage.setItem('students', JSON.stringify(data));
+        loadAdminTable();
+      }
     }
   </script>
 </body>
